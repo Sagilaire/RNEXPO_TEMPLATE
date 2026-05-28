@@ -38,6 +38,18 @@ module.exports = {
           'text-secondary': 'rgba(255, 255, 255, 0.85)',
         },
         'deco-circle': '#FFFFFF',
+        error: {
+          DEFAULT: '#EF4444',
+          dark: '#F87171',
+        },
+        success: {
+          DEFAULT: '#22C55E',
+          dark: '#4ADE80',
+        },
+        warning: {
+          DEFAULT: '#F59E0B',
+          dark: '#FBBF24',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'System'],
