@@ -1,18 +1,16 @@
-import { useEffect } from "react";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { ThemeProvider } from "@/context/ThemeContext";
-import { AnimatedThemeProvider } from "@/context/AnimatedThemeContext";
+import { useEffect } from 'react';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from 'expo-font';
+import { ErrorBoundary, ThemeProvider, AnimatedThemeProvider } from '@/core';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    Inter: require("../../assets/fonts/Inter-Regular.ttf"),
-    "Inter-Bold": require("../../assets/fonts/Inter-Bold.ttf"),
+    Inter: require('../../assets/fonts/Inter-Regular.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter-Bold.ttf'),
   });
 
   useEffect(() => {

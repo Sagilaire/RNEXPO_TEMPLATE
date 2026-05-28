@@ -3,16 +3,16 @@ import {
   useContext,
   useEffect,
   type ReactNode,
-} from "react";
+} from 'react';
 import {
   useSharedValue,
   useAnimatedStyle,
   interpolateColor,
   withTiming,
-} from "react-native-reanimated";
-import type { AnimatedStyle } from "react-native-reanimated";
-import { lightColors, darkColors, type Colors } from "@/theme/colors";
-import { useTheme } from "./ThemeContext";
+} from 'react-native-reanimated';
+import type { AnimatedStyle } from 'react-native-reanimated';
+import { lightColors, darkColors, type Colors } from './colors';
+import { useTheme } from './ThemeContext';
 
 /** Progress: 0 = light, 1 = dark */
 const AnimatedThemeContext = createContext<{ progress: { value: number } }>({
