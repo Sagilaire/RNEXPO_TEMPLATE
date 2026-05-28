@@ -973,6 +973,55 @@ const animatedStyle = useAnimatedStyle(() => ({
 }));
 ```
 
+### 6.2.1 StyleSheet Separation Convention
+
+Whenever `StyleSheet.create` is necessary, **extract it into a dedicated `.styles.ts` file** co-located with the component. This keeps component files clean and focused on logic.
+
+#### Naming Convention
+
+| File | Exports |
+|------|---------|
+| `ComponentName.styles.ts` | Named exports of `StyleSheet.create` results (e.g. `heroStyles`, `cardStyles`) |
+
+#### Examples
+
+```tsx
+// src/features/home/screens/HomeScreen.styles.ts ✅
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+export const heroStyles = StyleSheet.create({
+  decoCircleLarge: {
+    width: SCREEN_WIDTH * 0.7,
+    height: SCREEN_WIDTH * 0.7,
+    top: -SCREEN_WIDTH * 0.15,
+    right: -SCREEN_WIDTH * 0.2,
+  },
+  decoCircleMedium: {
+    width: SCREEN_WIDTH * 0.45,
+    height: SCREEN_WIDTH * 0.45,
+    bottom: -SCREEN_WIDTH * 0.12,
+    left: -SCREEN_WIDTH * 0.1,
+  },
+});
+```
+
+```tsx
+// src/features/home/screens/HomeScreen.tsx
+import { heroStyles } from './HomeScreen.styles';
+
+// Use className for everything possible, only apply StyleSheet for what Tailwind can't express
+<View className="absolute rounded-full" style={heroStyles.decoCircleLarge} />
+```
+
+#### Benefits
+
+- **SRP (Single Responsibility)**: Component file owns logic + JSX; styles file owns static style definitions.
+- **Readability**: No scrolling past 50+ lines of `StyleSheet.create` to reach the component logic.
+- **Reusability**: Multiple components can import the same `.styles.ts` file.
+- **Diff clarity**: Style changes in PRs appear in the `.styles.ts` file, not mixed with component logic changes.
+
 ### 6.3 Integration with Theme
 
 NativeWind detects dark mode via the `darkMode: 'class'` strategy. In React Native, you pass the `colorScheme` prop to the root provider:

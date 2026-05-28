@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -9,9 +9,9 @@ export default function NotFoundScreen() {
   const { colors, isDark } = useTheme();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[{ flex: 1, backgroundColor: colors.background }]}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      <View style={styles.container}>
+      <View className="flex-1 items-center justify-center px-8 gap-4">
         <Ionicons
           name="compass-outline"
           size={72}
@@ -19,8 +19,16 @@ export default function NotFoundScreen() {
           accessibilityLabel="Page not found"
           accessibilityRole="image"
         />
-        <Text style={[styles.title, { color: colors.text }]}>Page not found</Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+        <Text
+          className="text-2xl font-bold font-['Inter-Bold']"
+          style={{ color: colors.text }}
+        >
+          Page not found
+        </Text>
+        <Text
+          className="text-[15px] text-center leading-[22px]"
+          style={{ color: colors.textSecondary }}
+        >
           {"The page you're looking for doesn't exist or has been moved."}
         </Text>
         <Pressable
@@ -28,54 +36,17 @@ export default function NotFoundScreen() {
           accessibilityRole="button"
           accessibilityLabel="Go home"
           accessibilityHint="Navigates to the home screen"
+          className="flex-row items-center gap-2 px-6 py-3 rounded-xl mt-2"
           style={({ pressed }) => [
-            styles.button,
             { backgroundColor: colors.primary },
             pressed && { opacity: 0.8 },
           ]}
           onPress={() => router.replace('/')}
         >
           <Ionicons name="home-outline" size={18} color="#FFFFFF" />
-          <Text style={styles.buttonText}>Go Home</Text>
+          <Text className="text-[15px] font-semibold text-white">Go Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    gap: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    fontFamily: 'Inter-Bold',
-  },
-  subtitle: {
-    fontSize: 15,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginTop: 8,
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#FFFFFF',
-  },
-});

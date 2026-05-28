@@ -1,5 +1,5 @@
 import { Component, type ReactNode } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from './Text';
@@ -40,8 +40,8 @@ function FallbackScreen({ onReset }: { onReset: () => void }) {
   const { colors } = useTheme();
 
   return (
-    <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]}>
-      <View style={styles.container}>
+    <SafeAreaView style={[{ flex: 1, backgroundColor: colors.background }]}>
+      <View className="flex-1 items-center justify-center px-8 gap-4">
         <Ionicons
           name="alert-circle-outline"
           size={64}
@@ -49,8 +49,16 @@ function FallbackScreen({ onReset }: { onReset: () => void }) {
           accessibilityLabel="Error"
           accessibilityRole="image"
         />
-        <Text style={[styles.title, { color: colors.text }]}>Something went wrong</Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+        <Text
+          className="text-[22px] font-bold font-['Inter-Bold']"
+          style={{ color: colors.text }}
+        >
+          Something went wrong
+        </Text>
+        <Text
+          className="text-[15px] text-center leading-[22px]"
+          style={{ color: colors.textSecondary }}
+        >
           {'An unexpected error occurred.\nPlease try again.'}
         </Text>
         <Pressable
@@ -58,54 +66,17 @@ function FallbackScreen({ onReset }: { onReset: () => void }) {
           accessibilityRole="button"
           accessibilityLabel="Try again"
           accessibilityHint="Reloads the current screen"
+          className="flex-row items-center gap-2 px-6 py-3 rounded-xl mt-2"
           style={({ pressed }) => [
-            styles.button,
             { backgroundColor: colors.primary },
             pressed && { opacity: 0.8 },
           ]}
           onPress={onReset}
         >
           <Ionicons name="refresh" size={18} color="#FFFFFF" />
-          <Text style={styles.buttonText}>Try Again</Text>
+          <Text className="text-[15px] font-semibold text-white">Try Again</Text>
         </Pressable>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    gap: 16,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    fontFamily: 'Inter-Bold',
-  },
-  subtitle: {
-    fontSize: 15,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginTop: 8,
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#FFFFFF',
-  },
-});

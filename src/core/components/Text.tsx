@@ -1,16 +1,10 @@
-import { Text as NativeText, type TextProps, StyleSheet } from 'react-native';
+import { Text as NativeText, type TextProps } from 'react-native';
 
 interface ThemedTextProps extends TextProps {
-  /** NativeWind/Tailwind class names — forward-compatible, no-op until NativeWind is installed */
+  /** NativeWind/Tailwind class names */
   className?: string;
 }
 
-export function Text({ style, className: _className, ...props }: ThemedTextProps) {
-  return <NativeText style={[styles.base, style]} {...props} />;
+export function Text({ className, ...props }: ThemedTextProps) {
+  return <NativeText className={`font-['Inter'] ${className ?? ''}`} {...props} />;
 }
-
-const styles = StyleSheet.create({
-  base: {
-    fontFamily: 'Inter',
-  },
-});
