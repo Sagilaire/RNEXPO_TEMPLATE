@@ -49,16 +49,10 @@ function FallbackScreen({ onReset }: { onReset: () => void }) {
           accessibilityLabel="Error"
           accessibilityRole="image"
         />
-        <Text
-          className="text-[22px] font-bold font-['Inter-Bold']"
-          style={{ color: colors.text }}
-        >
+        <Text variant="h2" themeColor="text">
           Something went wrong
         </Text>
-        <Text
-          className="text-[15px] text-center leading-[22px]"
-          style={{ color: colors.textSecondary }}
-        >
+        <Text variant="bodySmall" themeColor="textSecondary" className="text-center">
           {'An unexpected error occurred.\nPlease try again.'}
         </Text>
         <Pressable
@@ -74,7 +68,7 @@ function FallbackScreen({ onReset }: { onReset: () => void }) {
           onPress={onReset}
         >
           <Ionicons name="refresh" size={18} color="#FFFFFF" />
-          <Text className="text-[15px] font-semibold text-white">Try Again</Text>
+          <Text variant="button" className="text-white">Try Again</Text>
         </Pressable>
       </View>
     </SafeAreaView>

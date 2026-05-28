@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Text, ThemedText, useTheme, useAnimatedColors } from '@/core';
+import { Text, useTheme, useAnimatedColors } from '@/core';
 import { heroStyles } from './HomeScreen.styles';
 
 export default function HomeScreen() {
@@ -37,43 +37,34 @@ export default function HomeScreen() {
 
           {/* Content */}
           <View className="gap-2 z-[1]">
-            <ThemedText
-              themeColor="heroTextSecondary"
-              className="text-[11px] font-bold font-['Inter-Bold'] tracking-[2.5px] opacity-80"
-            >
+            <Text variant="heroLabel" themeColor="heroTextSecondary">
               EXPO TEMPLATE
-            </ThemedText>
-            <ThemedText
-              themeColor="heroText"
-              className="text-[34px] font-extrabold font-['Inter-Bold'] tracking-tight"
-            >
+            </Text>
+            <Text variant="hero" themeColor="heroText">
               ExpoTemplate
-            </ThemedText>
-            <ThemedText
-              themeColor="heroTextSecondary"
-              className="text-base leading-[22px]"
-            >
+            </Text>
+            <Text variant="heroSub" themeColor="heroTextSecondary">
               A reusable Expo + React Native template.
-            </ThemedText>
+            </Text>
           </View>
         </View>
 
         {/* Body Section */}
         <View className="flex-1 items-center justify-center">
-          <ThemedText themeColor="textSecondary" className="text-lg font-semibold">
+          <Text variant="h3" themeColor="textSecondary">
             Ready to build.
-          </ThemedText>
+          </Text>
         </View>
 
         {/* Footer */}
         <View className="items-center pb-4 gap-1">
-          <ThemedText themeColor="textTertiary" className="text-xs">
+          <Text variant="caption" themeColor="textTertiary">
             Expo SDK 56 · TypeScript · expo-router
-          </ThemedText>
-          <ThemedText themeColor="textTertiary" className="text-xs">
+          </Text>
+          <Text variant="caption" themeColor="textTertiary">
             {isDark ? '🌙' : '☀️'} {isDark ? 'Dark' : 'Light'} mode
             {mode === 'auto' ? ' · Auto' : ''}
-          </ThemedText>
+          </Text>
         </View>
       </Animated.View>
     </SafeAreaView>

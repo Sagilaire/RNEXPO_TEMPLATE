@@ -19,16 +19,10 @@ export default function NotFoundScreen() {
           accessibilityLabel="Page not found"
           accessibilityRole="image"
         />
-        <Text
-          className="text-2xl font-bold font-['Inter-Bold']"
-          style={{ color: colors.text }}
-        >
+        <Text variant="h2" themeColor="text">
           Page not found
         </Text>
-        <Text
-          className="text-[15px] text-center leading-[22px]"
-          style={{ color: colors.textSecondary }}
-        >
+        <Text variant="bodySmall" themeColor="textSecondary" className="text-center">
           {"The page you're looking for doesn't exist or has been moved."}
         </Text>
         <Pressable
@@ -44,7 +38,7 @@ export default function NotFoundScreen() {
           onPress={() => router.replace('/')}
         >
           <Ionicons name="home-outline" size={18} color="#FFFFFF" />
-          <Text className="text-[15px] font-semibold text-white">Go Home</Text>
+          <Text variant="button" className="text-white">Go Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>

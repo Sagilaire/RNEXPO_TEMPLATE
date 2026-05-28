@@ -126,6 +126,30 @@ export function useAnimatedColors(): Record<keyof Colors, AnimatedStyle<any>> {
     ),
   }));
 
+  const error = useAnimatedStyle(() => ({
+    color: interpolateColor(
+      progress.value,
+      [0, 1],
+      [lightColors.error, darkColors.error],
+    ),
+  }));
+
+  const success = useAnimatedStyle(() => ({
+    color: interpolateColor(
+      progress.value,
+      [0, 1],
+      [lightColors.success, darkColors.success],
+    ),
+  }));
+
+  const warning = useAnimatedStyle(() => ({
+    color: interpolateColor(
+      progress.value,
+      [0, 1],
+      [lightColors.warning, darkColors.warning],
+    ),
+  }));
+
   return {
     primary,
     background,
@@ -137,5 +161,8 @@ export function useAnimatedColors(): Record<keyof Colors, AnimatedStyle<any>> {
     heroText,
     heroTextSecondary,
     circleDecoration,
+    error,
+    success,
+    warning,
   };
 }

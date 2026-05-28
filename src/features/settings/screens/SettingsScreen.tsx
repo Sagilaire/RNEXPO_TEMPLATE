@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, ThemedText, useTheme, useAnimatedColors } from '@/core';
+import { Text, useTheme, useAnimatedColors } from '@/core';
 import type { ThemeMode } from '@/core';
 
 const OPTIONS: { mode: ThemeMode; icon: keyof typeof Ionicons.glyphMap; label: string }[] = [
@@ -23,21 +23,15 @@ export default function SettingsScreen() {
     >
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Animated.View className="flex-1 px-6 pt-6 gap-6" style={ac.background}>
-        <ThemedText
-          themeColor="text"
-          className="text-[28px] font-extrabold font-['Inter-Bold']"
-        >
+        <Text variant="h1" themeColor="text">
           Settings
-        </ThemedText>
+        </Text>
 
         {/* Theme section */}
         <View className="gap-[10px]">
-          <ThemedText
-            themeColor="textSecondary"
-            className="text-xs font-semibold tracking-[1.2px] mb-0.5"
-          >
+          <Text variant="label" themeColor="textSecondary" className="mb-0.5">
             APPEARANCE
-          </ThemedText>
+          </Text>
 
           {OPTIONS.map((opt) => {
             const isSelected = mode === opt.mode;
@@ -67,11 +61,9 @@ export default function SettingsScreen() {
                   color={isSelected ? colors.primary : colors.textSecondary}
                 />
                 <Text
-                  className="flex-1 text-base font-semibold z-[1]"
-                  style={{
-                    color: isSelected ? colors.primary : colors.text,
-                    fontFamily: isSelected ? 'Inter-Bold' : 'Inter',
-                  }}
+                  variant="body"
+                  themeColor={isSelected ? 'primary' : 'text'}
+                  className={`flex-1 z-[1] ${isSelected ? 'font-bold' : 'font-semibold'}`}
                 >
                   {opt.label}
                 </Text>
@@ -92,11 +84,11 @@ export default function SettingsScreen() {
             );
           })}
 
-          <ThemedText themeColor="textTertiary" className="text-sm mt-1 pl-1">
+          <Text variant="description" themeColor="textTertiary" className="mt-1 pl-1">
             {mode === 'auto'
               ? 'Matches your device settings'
               : 'Overrides your device settings'}
-          </ThemedText>
+          </Text>
         </View>
       </Animated.View>
     </SafeAreaView>

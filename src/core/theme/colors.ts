@@ -13,6 +13,12 @@ export interface Colors {
   heroText: string;
   heroTextSecondary: string;
   circleDecoration: string;
+  /** Feedback: error / danger */
+  error: string;
+  /** Feedback: success */
+  success: string;
+  /** Feedback: warning */
+  warning: string;
 }
 
 export interface Theme {
@@ -34,6 +40,9 @@ export const lightColors: Colors = {
   heroText: '#FFFFFF',
   heroTextSecondary: 'rgba(255, 255, 255, 0.85)',
   circleDecoration: '#FFFFFF',
+  error: '#EF4444',
+  success: '#22C55E',
+  warning: '#F59E0B',
 };
 
 export const darkColors: Colors = {
@@ -47,4 +56,7 @@ export const darkColors: Colors = {
   heroText: '#FFFFFF',
   heroTextSecondary: 'rgba(255, 255, 255, 0.85)',
   circleDecoration: '#FFFFFF',
+  error: '#F87171',
+  success: '#4ADE80',
+  warning: '#FBBF24',
 };

@@ -1323,7 +1323,103 @@ export function Card({ children, className, onPress }: CardProps) {
 </Card>
 ```
 
-### 8.3 Extensible Components with `className` + `style`
+### 8.3 Unified Typography: The `Text` Component
+
+The project has a single, unified `Text` component (`src/core/components/Text.tsx`) that serves as the one-stop-shop for all text rendering. It merges a base font primitive, predefined typography variants, and theme color support — no separate `ThemedText` or `Typography` component is needed.
+
+#### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `variant` | `TextVariant` | Predefined typography preset (size, weight, tracking, leading) |
+| `themeColor` | `keyof Colors` | Pulls a color from the active light/dark theme |
+| `className` | `string` | Layout overrides only (`text-center`, `flex-1`, `mb-2`, etc.) |
+| `style` | `StyleProp<TextStyle>` | Standard RN style override (merged after `themeColor`) |
+| All `TextProps` | — | Any other React Native `Text` prop |
+
+#### Available Variants
+
+| Variant | Tailwind classes | Typical usage |
+|---------|-----------------|---------------|
+| `hero` | `text-[34px] font-extrabold tracking-tight` | Hero title on landing screen |
+| `heroSub` | `text-base leading-[22px]` | Hero subtitle / description |
+| `heroLabel` | `text-[11px] font-bold tracking-[2.5px] opacity-80` | Small uppercase label in hero |
+| `h1` | `text-[28px] font-extrabold` | Page title (Settings, etc.) |
+| `h2` | `text-2xl font-bold` | Section title (error, 404) |
+| `h3` | `text-lg font-semibold` | Subsection / emphasis |
+| `body` | `text-base` | Default body text |
+| `bodySmall` | `text-[15px] leading-[22px]` | Small body / error messages |
+| `label` | `text-xs font-semibold tracking-[1.2px]` | Section labels |
+| `caption` | `text-xs` | Footer / metadata |
+| `description` | `text-sm` | Descriptive text below controls |
+| `button` | `text-[15px] font-semibold` | Button / pressable labels |
+
+#### Usage Patterns
+
+```tsx
+// 1. Variant + themeColor — the standard pattern
+<Text variant="hero" themeColor="heroText">ExpoTemplate</Text>
+<Text variant="body" themeColor="textSecondary">Body text</Text>
+
+// 2. Variant + className for layout overrides only
+<Text variant="bodySmall" themeColor="textSecondary" className="text-center">
+  Centered small body
+</Text>
+<Text variant="label" themeColor="textSecondary" className="mb-1">
+  SECTION LABEL
+</Text>
+
+// 3. Dynamic themeColor (selected / unselected)
+<Text variant="body" themeColor={isSelected ? 'primary' : 'text'}>
+  Option label
+</Text>
+
+// 4. Without variant — className for one-off styling
+<Text className="text-white text-center">Static text</Text>
+```
+
+**Rule of thumb:** `variant` for typography (size, weight, tracking), `themeColor` for color, `className` only for layout (margin, padding, alignment).
+
+#### Why This Design?
+
+- **DRY**: One component instead of `Text` + `ThemedText`. No repeated `className="text-[34px] font-extrabold tracking-tight"` across screens.
+- **KISS**: A flat variant enum — easy to read, easy to extend.
+- **OCP (Open/Closed)**: New variants can be added to the map without changing the component logic.
+- **Separation of concerns**: Variant = typography, themeColor = color, className = layout.
+
+#### Implementation
+
+```tsx
+const textVariants = {
+  hero:       'text-[34px] font-extrabold tracking-tight',
+  heroSub:    'text-base leading-[22px]',
+  heroLabel:  'text-[11px] font-bold tracking-[2.5px] opacity-80',
+  h1:         'text-[28px] font-extrabold',
+  h2:         'text-2xl font-bold',
+  h3:         'text-lg font-semibold',
+  body:       'text-base',
+  bodySmall:  'text-[15px] leading-[22px]',
+  caption:    'text-xs',
+  label:      'text-xs font-semibold tracking-[1.2px]',
+  description:'text-sm',
+  button:     'text-[15px] font-semibold',
+} as const;
+
+export function Text({ variant, themeColor, className, style, ...props }: TextProps) {
+  const { colors } = useTheme();
+  const variantClasses = variant ? textVariants[variant] : '';
+
+  return (
+    <NativeText
+      className={`font-['Inter'] ${variantClasses} ${className ?? ''}`.trim()}
+      style={[themeColor ? { color: colors[themeColor] } : undefined, style]}
+      {...props}
+    />
+  );
+}
+```
+
+### 8.4 Extensible Components with `className` + `style`
 
 All core components accept `className` (for NativeWind) and `style` (for overrides):
 
