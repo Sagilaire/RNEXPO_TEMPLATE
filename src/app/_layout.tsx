@@ -4,12 +4,21 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import { ErrorBoundary, ThemeProvider, AnimatedThemeProvider, useTheme } from '@/core';
+import { QueryClientProvider } from '@tanstack/react-query';
+import * as Sentry from '@sentry/react-native';
+import { ErrorBoundary, ThemeProvider, AnimatedThemeProvider, useTheme, queryClient } from '@/core';
 
 // eslint-disable-next-line import/no-unassigned-import
 import '../../global.css';
 
 SplashScreen.preventAutoHideAsync();
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  tracesSampleRate: 0.2,
+  environment: process.env.EXPO_PUBLIC_ENVIRONMENT ?? 'development',
+  enabled: !!process.env.EXPO_PUBLIC_SENTRY_DSN,
+});
 
 function RootLayoutContent() {
   const { colorScheme } = useTheme();
@@ -42,9 +51,11 @@ export default function RootLayout() {
   return (
     <ErrorBoundary>
       <StatusBar style="auto" />
-      <ThemeProvider>
-        <RootLayoutContent />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <RootLayoutContent />
+        </ThemeProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 }

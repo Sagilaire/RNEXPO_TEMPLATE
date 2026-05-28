@@ -79,3 +79,14 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   removeItem: () => Promise.resolve(),
   clear: () => Promise.resolve(),
 }));
+
+jest.mock('expo-secure-store', () => ({
+  getItemAsync: jest.fn(() => Promise.resolve(null)),
+  setItemAsync: jest.fn(() => Promise.resolve()),
+  deleteItemAsync: jest.fn(() => Promise.resolve()),
+}));
+
+jest.mock('@react-native-community/netinfo', () => ({
+  addEventListener: jest.fn(() => () => {}),
+  fetch: jest.fn(() => Promise.resolve({ isConnected: true })),
+}));
